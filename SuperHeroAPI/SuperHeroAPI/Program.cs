@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SuperHeroAPI.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +17,11 @@ builder.Services.AddCors(
     }
     )
 );
+
+builder.Services.AddDbContextPool<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
 
 var app = builder.Build();
 
